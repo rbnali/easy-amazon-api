@@ -43,7 +43,7 @@ Excel & CSV file with the following columns:
 
 Column                        | Description
 -------------                 | -------------
-AmazonOrderId                 | Amazon prder identifier
+AmazonOrderId                 | Amazon order identifier
 MarketplaceId                 | Marketplace ID. The code can be modified if you want multiple marketplaces.
 PurchaseDate                  | Purchase date
 BuyerEmail                    | Encrypted buyer email (Amazon email)
