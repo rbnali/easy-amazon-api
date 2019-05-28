@@ -47,5 +47,3 @@ OrderStatus                   | Order Status
 NumberOfItemsShipped          | Number of items shipped
 OrderTotal_amount             | Total purchase amount of the order
 OrderTotal_currency           | Currency
-
-...
