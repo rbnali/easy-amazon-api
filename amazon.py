@@ -98,7 +98,7 @@ def run(mws_credentials, start_date, end_date):
     # RETRIEVE
     orders = get_mws_orders(
         orders_api=orders_api,
-        marketplace=mws_credentials['MWS_MARKETPLACE'],
+        marketplace=mws_credentials['MWS_MARKETPLACE_ID'],
         created_after=start_date,
         created_before=end_date
     )
