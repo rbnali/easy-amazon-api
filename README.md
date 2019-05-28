@@ -16,9 +16,13 @@ You will also need to create a json file with your MWS API credentials called [a
 	"MWS_ACCOUNT_ID": "YOUR_MWS_ACCOUNT_ID",
 	"MWS_ACCESS_KEY" : "YOUR_MWS_ACCESS_KEY",
 	"MWS_SECRET_KEY": "YOUR_MWS_SECRET_KEY",
-	"MWS_MARKETPLACE": "YOUR_MWS_MARKETPLACE_ID"
+	"MWS_MARKETPLACE_ID": "YOUR_MWS_MARKETPLACE_ID"
 }
 ```
+
+If you don't have MWS API credentials, connect to Amazon Sellercentral and make a request here: https://sellercentral.amazon.fr/gp/account-manager/home.html/
+
+You will find documentations on marketplace IDs here: https://docs.developer.amazonservices.com/en_US/dev_guide/DG_Endpoints.html
 
 # Arguments
 
