@@ -39,6 +39,8 @@ python amazon.py -start 2019-05-01 -end 2019-05-31
 
 # Output description
 
+Excel & CSV file with the following columns:
+
 Column                        | Description
 -------------                 | -------------
 AmazonOrderId                 | Amazon prder identifier
