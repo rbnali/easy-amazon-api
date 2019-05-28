@@ -9,7 +9,7 @@ You can install all the necesssary requirements with the following command:
 pip install -r requirements.txt
 ```
 
-You will also need to create a json file with your MWS API credentials in the same folder.
+You will also need to create a json file with your MWS API credentials called [amazon_credentials.json](amazon_credentials.json) in the same folder as [amazon.py](amazon.py).
 
 ```
 {
@@ -38,7 +38,7 @@ python amazon.py -start 2019-05-01 -end 2019-05-31
 Column                        | Description
 -------------                 | -------------
 AmazonOrderId                 | Amazon prder identifier
-MarketplaceId                 | Marketplace (code can be modified if you want multiple marketplaces
+MarketplaceId                 | Marketplace ID. The code can be modified if you want multiple marketplaces.
 PurchaseDate                  | Purchase date
 BuyerEmail                    | Encrypted buyer email (Amazon email)
 BuyerName                     | Buyer first name and last name
