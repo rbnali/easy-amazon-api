@@ -9,7 +9,7 @@ You can install all the necesssary requirements with the following command:
 pip install -r requirements.txt
 ```
 
-You will also need to create a json file with your MWS API credentials called [amazon_credentials.json](amazon_credentials.json) in the same folder as [amazon.py](amazon.py).
+You will also need to create a json file with your MWS API credentials called `amazon_credentials.json` in the same folder as `amazon.py`.
 
 ```
 {
