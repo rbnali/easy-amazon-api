@@ -3,7 +3,7 @@ Python script to retrieve orders information from Amazon MWS API to Pandas or Ex
 
 # Requirements
 
-You can install all the necesssary requirements with the following command:
+Please install all the necesssary requirements with the following command:
 
 ```
 pip install -r requirements.txt
