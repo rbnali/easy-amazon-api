@@ -20,7 +20,7 @@ You will also need to create a json file with your MWS API credentials called `a
 }
 ```
 
-If you don't have MWS API credentials, connect to Amazon Sellercentral and make a request here: https://sellercentral.amazon.fr/gp/account-manager/home.html/
+If you don't have MWS API credentials, connect to Amazon Sellercentral and write a request here: https://sellercentral.amazon.fr/gp/account-manager/home.html/
 
 You will find documentations on marketplace IDs here: https://docs.developer.amazonservices.com/en_US/dev_guide/DG_Endpoints.html
 
