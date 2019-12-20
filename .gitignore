@@ -1,5 +1,8 @@
-# Excluding credentials
+# Ignore credentials
 amazon_credentials.json
+
+# Ignore data
+data/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

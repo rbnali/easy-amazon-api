@@ -121,5 +121,5 @@ if __name__ == '__main__':
 
     ### RUN ### 
     amazon = run(mws_credentials, args.start, args.end)
-    amazon.to_excel('amazon_' + args.start + '_to_' + args.end + '.xlsx', index=False)
-    amazon.to_csv('amazon_' + args.start + '_to_' + args.end + '.csv', index=False)
+    amazon.to_excel('data/amazon_' + args.start + '_to_' + args.end + '.xlsx', index=False)
+    amazon.to_csv('data/amazon_' + args.start + '_to_' + args.end + '.csv', index=False)
