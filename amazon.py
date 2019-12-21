@@ -1,3 +1,4 @@
+# coding=utf-8
 from mws import mws
 import pandas as pd
 import time
@@ -39,11 +40,11 @@ def get_mws_orders(orders_api, marketplace, created_after, created_before):
     pagination = True
     p = 1
     try:
-        orders = orders_api.list_orders(marketplaceids=[marketplace], created_after=created_after, created_before=created_before)
+        orders = orders_api.list_orders(marketplaceids=marketplace, created_after=created_after, created_before=created_before)
     except: # To prevent against throttled requests
         print('Throttled requests - Waiting 1 min before trying again.')
         time.sleep(61)
-        orders = orders_api.list_orders(marketplaceids=[marketplace], created_after=created_after, created_before=created_before)
+        orders = orders_api.list_orders(marketplaceid=marketplace, created_after=created_after, created_before=created_before)
     
     # ITERATE
     while pagination:
@@ -121,5 +122,5 @@ if __name__ == '__main__':
 
     ### RUN ### 
     amazon = run(mws_credentials, args.start, args.end)
-    amazon.to_excel('amazon_' + args.start + '_to_' + args.end + '.xlsx', index=False)
-    amazon.to_csv('amazon_' + args.start + '_to_' + args.end + '.csv', index=False)
+    amazon.to_excel('data/amazon_' + args.start + '_to_' + args.end + '.xlsx', index=False, encoding='utf-8')
+    amazon.to_csv('data/amazon_' + args.start + '_to_' + args.end + '.csv', index=False, encoding='utf-8')
