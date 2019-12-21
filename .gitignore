@@ -1,5 +1,8 @@
-# Excluding credentials
+# Do not track changes on credentials
 amazon_credentials.json
+
+# Do not store data
+data/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
