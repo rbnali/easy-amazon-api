@@ -12,6 +12,7 @@ SELECTED_COLS = [
     'BuyerName', 'ShipmentServiceLevelCategory','OrderStatus', 
     'NumberOfItemsShipped', 'OrderTotal_amount' , 'OrderTotal_currency'
 ]
+SHIPPING_FIELDS = ['AddressLine1', 'AddressLine2', 'City', 'CountryCode', 'Name', 'PostalCode']
 
 
 def get_clean_order_list(order_list):
@@ -33,7 +34,6 @@ def get_clean_order_list(order_list):
                     o[f] = order[f]['value']
 
         # Shipping fields
-        SHIPPING_FIELDS = ['AddressLine1', 'AddressLine2', 'City', 'CountryCode', 'Name', 'PostalCode']
         for f in SHIPPING_FIELDS:
             if f in order.keys():
                 o[f] = order['ShippingAddress'][f]['value']
