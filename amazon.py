@@ -68,8 +68,6 @@ def get_mws_orders(orders_api, marketplace, created_after, created_before):
         
         if 'NextToken' in orders.parsed.keys():
             next_token = orders.parsed['NextToken']['value']
-            
-            # To prevent against throttled requests
             try:
                 orders = orders_api.list_orders_by_next_token(token=next_token)
             except: 
