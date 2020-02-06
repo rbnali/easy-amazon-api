@@ -4,9 +4,17 @@ import time
 import json
 import argparse
 
-### AMAZON API FUNCTIONS ###
+
+CREDENTIALS_PATH = 'amazon_credentials.json'
+SELECTED_COLS = [
+    'AmazonOrderId','MarketplaceId','PurchaseDate','BuyerEmail', 
+    'BuyerName', 'ShipmentServiceLevelCategory','OrderStatus', 
+    'NumberOfItemsShipped', 'OrderTotal_amount' , 'OrderTotal_currency'
+]
+
 
 def get_clean_order_list(order_list):
+    """Convert JSON orders to dictionaries with on"""
     clean_list = list()
     for order in order_list:
         o = dict()
@@ -24,8 +32,8 @@ def get_clean_order_list(order_list):
                     o[f] = order[f]['value']
 
         # Shipping fields
-        shipping_fields = ['AddressLine1', 'AddressLine2', 'City', 'CountryCode', 'Name', 'PostalCode']
-        for f in shipping_fields:
+        SHIPPING_FIELDS = ['AddressLine1', 'AddressLine2', 'City', 'CountryCode', 'Name', 'PostalCode']
+        for f in SHIPPING_FIELDS:
             if f in order.keys():
                 o[f] = order['ShippingAddress'][f]['value']
 
@@ -33,8 +41,14 @@ def get_clean_order_list(order_list):
     return clean_list
 
 def get_mws_orders(orders_api, marketplace, created_after, created_before):
+    """Get MWS orders from Orders API in marketplace between created_after and created_before
+    :param order_api:
+    :param marketplace: list of MWS marketplacess
+    :param created_after: min date for orderss
+    :param created_before: max date for orders
+    """
     
-    # INITIALIZE
+    # Initialize
     mws_orders = list()
     pagination = True
     p = 1
@@ -45,7 +59,7 @@ def get_mws_orders(orders_api, marketplace, created_after, created_before):
         time.sleep(61)
         orders = orders_api.list_orders(marketplaceids=[marketplace], created_after=created_after, created_before=created_before)
     
-    # ITERATE
+    # Iterate
     while pagination:
         print('API call on MWS #', str(p))
         order_list = orders.parsed['Orders']['Order']
@@ -73,44 +87,29 @@ def get_mws_orders(orders_api, marketplace, created_after, created_before):
         else:
             pagination = False
     
-    # TO PANDAS
-    amazon = pd.DataFrame(mws_orders)
-    sel_cols = [
-        'AmazonOrderId','MarketplaceId','PurchaseDate','BuyerEmail', 
-        'BuyerName', 'ShipmentServiceLevelCategory','OrderStatus', 
-        'NumberOfItemsShipped', 'OrderTotal_amount' , 'OrderTotal_currency'
-    ]
-    return amazon[sel_cols]
+    amazon = pd.DataFrame(mws_orders)[SELECTED_COLS]
+    return amazon
 
-
-### UPDATE ###
 
 def run(mws_credentials, start_date, end_date):
-    
-    # PREPARE
+    """Connect to MWS API and retrieve orders between start_date and end_date."""
     orders_api = mws.Orders(
         access_key=mws_credentials['MWS_ACCESS_KEY'], 
         secret_key=mws_credentials['MWS_SECRET_KEY'], 
         account_id=mws_credentials['MWS_ACCOUNT_ID'],
         region='FR',
     )
-    
-    # RETRIEVE
     orders = get_mws_orders(
         orders_api=orders_api,
         marketplace=mws_credentials['MWS_MARKETPLACE_ID'],
         created_after=start_date,
         created_before=end_date
     )
-    
     return orders
-
-### RUN ###
 
 if __name__ == '__main__':
     ### MWS CREDENTIALS ###
-    amazon_path = 'amazon_credentials.json'
-    with open(amazon_path) as f:
+    with open(CREDENTIALS_PATH) as f:
         mws_credentials = json.load(f)
 
     ### PARSING ARGS ###
