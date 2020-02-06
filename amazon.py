@@ -15,6 +15,7 @@ SELECTED_COLS = [
 SHIPPING_FIELDS = ['AddressLine1', 'AddressLine2', 'City', 'CountryCode', 'Name', 'PostalCode']
 THROTTLED_WAITING_TIME = 60
 
+
 def get_clean_order_list(order_list):
     """Reducing the number of levels in JSON raw orders to 1."""
     clean_list = list()
