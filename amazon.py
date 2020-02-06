@@ -13,7 +13,7 @@ SELECTED_COLS = [
     'NumberOfItemsShipped', 'OrderTotal_amount' , 'OrderTotal_currency'
 ]
 SHIPPING_FIELDS = ['AddressLine1', 'AddressLine2', 'City', 'CountryCode', 'Name', 'PostalCode']
-
+THROTTLED_WAITING_TIME = 60
 
 def get_clean_order_list(order_list):
     """Reducing the number of levels in JSON raw orders to 1."""
@@ -57,7 +57,7 @@ def get_mws_orders(orders_api, marketplace, created_after, created_before):
         orders = orders_api.list_orders(marketplaceids=marketplace, created_after=created_after, created_before=created_before)
     except: # To prevent against throttled requests
         print('Throttled requests - Waiting 1 min before trying again.')
-        time.sleep(61)
+        time.sleep(THROTTLED_WAITING_TIME+1)
         orders = orders_api.list_orders(marketplaceid=marketplace, created_after=created_after, created_before=created_before)
     
     # Iterate
@@ -72,12 +72,12 @@ def get_mws_orders(orders_api, marketplace, created_after, created_before):
                 orders = orders_api.list_orders_by_next_token(token=next_token)
             except: 
                 print('Throttled requests - Waiting 1 min before trying again.')
-                time.sleep(61)
+                time.sleep(THROTTLED_WAITING_TIME+1)
                 try:
                     orders = orders_api.list_orders_by_next_token(token=next_token)
                 except:
                     print('Throttled requests - Waiting an aditionnal 2 min before trying again.')
-                    time.sleep(121)
+                    time.sleep(2*THROTTLED_WAITING_TIME+1)
                     try:
                         orders = orders_api.list_orders_by_next_token(token=next_token)
                     except:
