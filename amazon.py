@@ -15,7 +15,7 @@ SELECTED_COLS = [
 
 
 def get_clean_order_list(order_list):
-    """Convert JSON orders to dictionaries with on"""
+    """Reducing the number of levels in JSON raw orders to 1."""
     clean_list = list()
     for order in order_list:
         o = dict()
