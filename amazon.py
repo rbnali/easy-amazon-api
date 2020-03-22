@@ -4,9 +4,15 @@ import pandas as pd
 import time
 import json
 import argparse
+import os
 
 
-CREDENTIALS_PATH = 'amazon_credentials.json'
+MWD_CREDENTIALS = {
+    "MWS_ACCOUNT_ID": os.environ.get("MWS_ACCOUNT_ID"),
+    "MWS_ACCESS_KEY" : os.environ.get("MWS_ACCESS_KEY"),
+    "MWS_SECRET_KEY": os.environ.get("MWS_SECRET_KEY"),
+    "MWS_MARKETPLACE_IDS": os.environ.get("MWS_MARKETPLACE_IDS").split(",")
+}
 SELECTED_COLS = [
     'AmazonOrderId','MarketplaceId','PurchaseDate','BuyerEmail', 
     'BuyerName', 'ShipmentServiceLevelCategory','OrderStatus', 
@@ -42,12 +48,16 @@ def get_clean_order_list(order_list):
         clean_list += [o]
     return clean_list
 
+
 def get_mws_orders(orders_api, marketplace, created_after, created_before):
-    """Get MWS orders from Orders API in marketplace between created_after and created_before
-    :param order_api:
-    :param marketplace: list of MWS marketplacess
-    :param created_after: min date for orderss
-    :param created_before: max date for orders
+    """
+    Get MWS orders from Orders API in marketplace between created_after and created_before.
+
+    Args:
+        :order_api: class Orders(MWS)
+        :marketplace: list of MWS marketplacess
+        :created_after: min date for orders in the format %Y-%m-%d
+        :created_before: max date for orders in the format %Y-%m-%d
     """
     
     # Initialize
@@ -93,32 +103,33 @@ def get_mws_orders(orders_api, marketplace, created_after, created_before):
 
 def run(mws_credentials, start_date, end_date):
     """Connect to MWS API and retrieve orders between start_date and end_date."""
+    # Connect to API
     orders_api = mws.Orders(
         access_key=mws_credentials['MWS_ACCESS_KEY'], 
         secret_key=mws_credentials['MWS_SECRET_KEY'], 
         account_id=mws_credentials['MWS_ACCOUNT_ID'],
         region='FR',
     )
+    # Get MWS Orders
     orders = get_mws_orders(
         orders_api=orders_api,
-        marketplace=mws_credentials['MWS_MARKETPLACE_ID'],
+        marketplace=mws_credentials['MWS_MARKETPLACE_IDS'],
         created_after=start_date,
         created_before=end_date
     )
     return orders
 
-if __name__ == '__main__':
-    ### MWS CREDENTIALS ###
-    with open(CREDENTIALS_PATH) as f:
-        mws_credentials = json.load(f)
 
-    ### PARSING ARGS ###
+if __name__ == '__main__':
+    # Parsing args
     parser = argparse.ArgumentParser()
     parser.add_argument('-start', action='store', dest='start', type=str, help='Start date of the order import in the following format: YYYY-mm-dd')
     parser.add_argument('-end', action='store', dest='end', type=str, help='End date of the order import in the following format: YYYY-mm-dd')
     args = parser.parse_args()
 
-    ### RUN ### 
-    amazon = run(mws_credentials, args.start, args.end)
+    # Retrieve data
+    amazon = run(MWD_CREDENTIALS, args.start, args.end)
+
+    # Store data
     amazon.to_excel('data/amazon_' + args.start + '_to_' + args.end + '.xlsx', index=False, encoding='utf-8')
     amazon.to_csv('data/amazon_' + args.start + '_to_' + args.end + '.csv', index=False, encoding='utf-8')
