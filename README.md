@@ -9,16 +9,16 @@ Please install all the necesssary requirements with the following command:
 pip install -r requirements.txt
 ```
 
-You will also need to create a json file with your MWS API credentials called `amazon_credentials.json` in the same folder as `amazon.py`.
+You will also need to add your MWS API credentials in your env variables.
 
 ```
-{
-	"MWS_ACCOUNT_ID": "YOUR_MWS_ACCOUNT_ID",
-	"MWS_ACCESS_KEY" : "YOUR_MWS_ACCESS_KEY",
-	"MWS_SECRET_KEY": "YOUR_MWS_SECRET_KEY",
-	"MWS_MARKETPLACE_ID": "YOUR_MWS_MARKETPLACE_ID"
-}
+export MWS_ACCOUNT_ID=YOUR_MWS_ACCOUNT_ID
+export MWS_ACCESS_KEY=YOUR_MWS_ACCESS_KEY
+export MWS_SECRET_KEY=YOUR_MWS_SECRET_KEY
+export MWS_MARKETPLACE_IDS=YOUR_MWS_MARKETPLACE_IDS
 ```
+
+where `MWS_MARKETPLACE_IDS` is a comma-seperated list of marketplace IDs.
 
 If you don't have MWS API credentials, connect to Amazon Sellercentral and write a request here: https://sellercentral.amazon.fr/gp/account-manager/home.html/
 
@@ -53,3 +53,4 @@ OrderStatus                   | Order Status
 NumberOfItemsShipped          | Number of items shipped
 OrderTotal_amount             | Total purchase amount of the order
 OrderTotal_currency           | Currency
+...                           | ...
